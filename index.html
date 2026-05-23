@@ -115,7 +115,7 @@
         e.preventDefault();
         
         const cleanIMEI = imeiInput.value.replace(/[^0-9]/g, '');
-        const cleanPlate = 'S.' + plateInput.value.replace(/[^0-9]/g, '');
+        const cleanPlate = plateInput.value.replace(/[^0-9]/g, '');
 
         try {
             await fetch(WEB_APP_URL, {
