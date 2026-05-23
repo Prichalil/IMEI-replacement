@@ -107,17 +107,27 @@
     });
 
     form.addEventListener('submit', async (e) => {
-        e.preventDefault();
+        e.preventDefault(); // На время проверки блокируем отправку
         
         const cleanIMEI = imeiInput.value.replace(/[^0-9]/g, '');
         const cleanPlate = plateInput.value.replace(/[^0-9]/g, '');
+
+        if (cleanIMEI.length !== 15) {
+            alert(`Ошибка! В поле IMEI должно быть ровно 15 цифр (сейчас введено: ${cleanIMEI.length}). Исправьте ошибку перед отправкой.`);
+            return; 
+        }
+
+        if (cleanPlate.length !== 6) {
+            alert(`Ошибка! В номере ТС должно быть ровно 6 цифр (сейчас введено: ${cleanPlate.length}). Исправьте ошибку перед отправкой.`);
+            return; 
+        }
 
         try {
             await fetch(WEB_APP_URL, {
                 method: 'POST',
                 mode: 'no-cors', 
                 headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-                body: JSON.stringify({ imei: cleanIMEI, plate: cleanPlate })
+                body: JSON.stringify({ imei: cleanIMEI, plate: finalPlate })
             });
 
             alert('Данные улетели в таблицу!');
